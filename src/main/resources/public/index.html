@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Products</title>
+</head>
+<body ng-app="products">
+<div class="container" ng-controller="Controller">
+    <table>
+        <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="product in products">
+            <td>{{product.id}}</td>
+            <td ng-switch="mode[$index]">
+                <input ng-switch-when="edit" type="text" ng-model="product.name" >
+                <div ng-switch-default>{{ product.name }}</div>
+            </td>
+            <td ng-switch="mode[$index]">
+                <input ng-switch-when="edit" type="number" ng-model="product.quantity" >
+                <div ng-switch-default>{{ product.quantity }}</div>
+            </td>
+            <td ng-switch="mode[$index]">
+                <button ng-switch-when="edit" ng-click="saveProduct($index, product)">Save</button>
+                <button ng-switch-default ng-click="updateProduct($index)">Update</button>
+                <button ng-switch-when="edit" ng-click="cancelEdit()">Cancel</button>
+                <button ng-switch-default ng-click="deleteProduct($index)">Remove</button>
+            </td>
+        </tr>
+        <tr>
+            <form ng-submit ng-controller="Controller" name="newProduct">
+                <td></td>
+                <td><input ng-model="product.name" type="text" placeholder="Name" /></td>
+                <td><input ng-model="product.quantity" type="number" placeholder="Quantity" /></td>
+                <td><button type="submit" ng-click="addProduct()">Save</button></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+<script src="js/Main.js"></script>
+<script src="js/Controller.js"></script>
+<script src="js/Service.js"></script>
+</html>
